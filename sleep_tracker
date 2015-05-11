@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+require 'highline/import'
+
+menu_prompt = <<EOS
+1. Add a goal
+2. List all gaossss
+3. Exit
+EOS
+
+if ARGV.length < 1
+  print "[Help] Run as: ./sleep_tracker manage"
+elsif ARGV.length == 1
+  # Not valid argument
+  if ARGV[0] != 'manage'
+    print "[Help] Run as: ./sleep_tracker manage"
+  else
+    choose do |menu|
+      menu.prompt = ""
+
+      menu.choice('Add a goal') { say("") }
+      menu.choice('List all goals') { say("No goals found. Add a goal.\n") }
+      menu.choice('Exit') { say("Good luck, see you soon!\n") }
+    end
+  end
+end
