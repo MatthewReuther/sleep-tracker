@@ -7,13 +7,7 @@ menu_prompt = <<EOS
 3. Exit
 EOS
 
-if ARGV.length < 1
-  print "[Help] Run as: ./sleep_tracker manage"
-elsif ARGV.length == 1
-  # Not valid argument
-  if ARGV[0] != 'manage'
-    print "[Help] Run as: ./sleep_tracker manage"
-  else
+if ARGV.size == 1 and ARGV[0] == "manage"
     choose do |menu|
       menu.prompt = ""
 
@@ -21,5 +15,6 @@ elsif ARGV.length == 1
       menu.choice('List all goals') { say("No goals found. Add a goal.\n") }
       menu.choice('Exit') { say("Good luck, see you soon!\n") }
     end
-  end
+else
+  puts "[Help] Run as: ./sleep_tracker manage"
 end

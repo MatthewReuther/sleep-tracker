@@ -5,17 +5,27 @@ class TestBasicUsage < Minitest::Test
     shell_output = ""
     expected_output = ""
     IO.popen('./sleep_tracker') do |pipe|
-      expected_output = "[Help] Run as: ./sleep_tracker manage"
+      expected_output = "[Help] Run as: ./sleep_tracker manage\n"
       shell_output = pipe.read
     end
     assert_equal expected_output, shell_output
   end
 
-  def test_manage_argument_not_given
+  def test_manage_wrong_argument_given
     shell_output = ""
     expected_output = ""
-    IO.popen('./sleep_tracker asfasfa') do |pipe|
-      expected_output = "[Help] Run as: ./sleep_tracker manage"
+    IO.popen('./sleep_tracker idk') do |pipe|
+      expected_output = "[Help] Run as: ./sleep_tracker manage\n"
+      shell_output = pipe.read
+    end
+    assert_equal expected_output, shell_output
+  end
+
+  def test_manage_multiple_arguments_given
+    shell_output = ""
+    expected_output = ""
+    IO.popen('./sleep_tracker idk idk') do |pipe|
+      expected_output = "[Help] Run as: ./sleep_tracker manage\n"
       shell_output = pipe.read
     end
     assert_equal expected_output, shell_output
