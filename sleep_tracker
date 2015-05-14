@@ -11,13 +11,21 @@ menu_prompt = <<EOS
 EOS
 
 if ARGV.size == 1 and ARGV[0] == "manage"
-  choose do |menu|
-    menu.prompt = ""
+  loop do
+    choose do |menu|
+      menu.prompt = ""
 
-    goals_controller = GoalsController.new
-    menu.choice('Add a goal') { say("") }
-    menu.choice('List all goals') { say( goals_controller.index ) }
-    menu.choice('Exit') { say("Good luck, see you soon!\n") }
+      goals_controller = GoalsController.new
+      menu.choice('Add a goal') { say("What goal would you like to add") }
+      menu.choice('List all goals') do
+        say( goals_controller.index )
+        exit
+      end
+      menu.choice('Exit') do
+        say("Good luck, see you soon!\n")
+        exit
+      end
+    end
   end
 else
   puts "[Help] Run as: ./sleep_tracker manage"
