@@ -16,7 +16,7 @@ if ARGV.size == 1 and ARGV[0] == "manage"
 
     goals_controller = GoalsController.new
     menu.choice('Add a goal') { say("") }
-    menu.choice('List all goals') { goals_controller.index }
+    menu.choice('List all goals') { say( goals_controller.index ) }
     menu.choice('Exit') { say("Good luck, see you soon!\n") }
   end
 else

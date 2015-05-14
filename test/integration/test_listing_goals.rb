@@ -16,15 +16,15 @@ class TestListingGoals < Minitest::Test
   end
 
   def test_listing_multiple_goals
-    create_goal("six")
     create_goal("five")
+    create_goal("six")
     shell_output = ""
     expected_output = ""
     IO.popen('./sleep_tracker manage', 'r+') do |pipe|
       expected_output << main_menu
       pipe.puts "2" # List all goals
-      expected_output << "1. six\n"
-      expected_output << "2. five\n"
+      expected_output << "1. five\n"
+      expected_output << "2. six\n"
       pipe.close_write
       shell_output = pipe.read
     end
