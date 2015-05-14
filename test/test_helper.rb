@@ -10,9 +10,11 @@ Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new(reporter_opti
 
 require 'minitest/autorun'
 class Minitest::Test
+  def setup
     Database.load_structure
     Database.execute("DELETE FROM goals;")
   end
+end
 
 
 def create_goal(name)

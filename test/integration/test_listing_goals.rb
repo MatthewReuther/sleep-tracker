@@ -24,7 +24,7 @@ class TestListingGoals < Minitest::Test
       expected_output << main_menu
       pipe.puts "2" # List all goals
       expected_output << "1. six\n"
-      expected_output << "2. five"
+      expected_output << "2. five\n"
       pipe.close_write
       shell_output = pipe.read
     end
