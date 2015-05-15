@@ -1,5 +1,10 @@
 class Goal
+  attr_reader :id
   attr_accessor :name
+
+  def initialize(name = nil)
+    self.name = name
+  end
 
   def self.all
     Database.execute("select name from goals order by name ASC").map do |row|
@@ -13,11 +18,8 @@ class Goal
     Database.execute("select count(id) from goals")[0][0]
   end
 
-  def self.create(name)
-    if name.empty?
-      raise ArgumentError.new
-    else
-      Database.execute("INSERT INTO goals (name) VALUES (?)", name)
-    end
+  def save
+    Database.execute("INSERT INTO goals (name) VALUES (?)", name)
+    @id = Database.execute("SELECT last_insert_rowid()")[0]['last_insert_rowid()']
   end
 end

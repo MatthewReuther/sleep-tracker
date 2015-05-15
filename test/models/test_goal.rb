@@ -44,15 +44,46 @@ describe Goal do
     end
   end
 
-  describe "#create" do
-    describe "if we need to add goals" do
-      it "should add a goal" do
-        Goal.create("tweleve hours")
-        assert_equal 1, Goal.count
-      end
+  describe ".initialize" do
+    it "sets the name attribute" do
+      goal = Goal.new("foo")
+      assert_equal "foo", goal.name
+    end
+  end
 
-      it "should reject empty strings" do
-       assert_raises(ArgumentError) { Goal.create("")}
+  describe ".save" do
+    describe "if the model is valid" do
+      let(:goal){ Goal.new("roast a pig") }
+      it "should return true" do
+        assert goal.save
+      end
+      it "should save the model to the database" do
+        goal.save
+        assert_equal 1, Goal.count
+        last_row = Database.execute("SELECT * FROM goals")[0]
+        database_name = last_row['name']
+        assert_equal "roast a pig", database_name
+      end
+      it "should populate the model with id from the database" do
+        goal.save
+        last_row = Database.execute("SELECT * FROM goals")[0]
+        database_id = last_row['id']
+        assert_equal database_id, goal.id
+      end
+    end
+
+    describe "if the model is invalid" do
+      let(:goal){ Goal.new("") }
+      it "should return false" do
+        refute goal.save
+      end
+      it "should not save the model to the database" do
+        goal.save
+        assert_equal 0, Goal.count
+      end
+      it "should populate the error messages" do
+        goal.save
+        assert_equal "\"\" is not a valid goal name.", goal.errors
       end
     end
   end

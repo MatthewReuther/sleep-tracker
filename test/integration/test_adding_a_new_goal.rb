@@ -30,8 +30,8 @@ class AddingANewGoalTest < Minitest::Test
       pipe.puts test_goal
       expected_output << "\"#{test_goal}\" has been added\n"
       expected_output << main_menu
-      pipe.puts "3"
-      expected_output << "Good luck, see you soon!\n"
+      pipe.puts "2"
+      expected_output << "1. #{test_goal}\n"
       shell_output = pipe.read
       pipe.close_write
       pipe.close_read
@@ -39,3 +39,4 @@ class AddingANewGoalTest < Minitest::Test
     assert_equal expected_output, shell_output
   end
 end
+

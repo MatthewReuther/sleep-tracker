@@ -16,9 +16,11 @@ class GoalsController
 
   def add(name)
     name_cleaned = name.strip
-    unless /^\d+$/.match(name_cleaned)
-      Goal.create(name_cleaned)
-      name_cleaned
+    goal = Goal.new(name_cleaned)
+    if goal.save
+      "\"#{name}\" has been added\n"
+    else
+      goal.errors
     end
   end
 end
