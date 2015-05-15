@@ -13,5 +13,13 @@ class GoalsController
       "No goals found. Add a goal.\n"
     end
   end
+
+  def add(name)
+    name_cleaned = name.strip
+    unless /^\d+$/.match(name_cleaned)
+      Goal.create(name_cleaned)
+      name_cleaned
+    end
+  end
 end
 

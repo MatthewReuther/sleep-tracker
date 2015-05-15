@@ -43,4 +43,17 @@ describe Goal do
       end
     end
   end
+
+  describe "#create" do
+    describe "if we need to add goals" do
+      it "should add a goal" do
+        Goal.create("tweleve hours")
+        assert_equal 1, Goal.count
+      end
+
+      it "should reject empty strings" do
+       assert_raises(ArgumentError) { Goal.create("")}
+      end
+    end
+  end
 end
