@@ -22,7 +22,8 @@ describe GoalsController do
 
     it "should not add goal all spaces" do
       goal_name = "       "
-      assert_raises(ArgumentError) { controller.add(goal_name) }
+      result = controller.add(goal_name)
+      assert_equal "\"\" is not a valid goal name.", result
     end
 
     it "should only add goals that make sense" do

@@ -29,6 +29,7 @@ class Goal
   end
 
   def save
+    return false unless valid?
     Database.execute("INSERT INTO goals (name) VALUES (?)", name)
     @id = Database.execute("SELECT last_insert_rowid()")[0]['last_insert_rowid()']
   end
