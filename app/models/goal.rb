@@ -18,6 +18,16 @@ class Goal
     Database.execute("select count(id) from goals")[0][0]
   end
 
+  def valid?
+    if name.nil? or name.empty? or /^\d+$/.match(name)
+      @errors = "\"#{name}\" is not a valid goal name."
+      false
+    else
+      @errors = nil
+      true
+    end
+  end
+
   def save
     Database.execute("INSERT INTO goals (name) VALUES (?)", name)
     @id = Database.execute("SELECT last_insert_rowid()")[0]['last_insert_rowid()']

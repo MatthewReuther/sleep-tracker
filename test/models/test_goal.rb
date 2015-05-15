@@ -87,4 +87,62 @@ describe Goal do
       end
     end
   end
+
+describe ".valid?" do
+    describe "with valid data" do
+      let(:goal){ Goal.new("eat corn on the cob") }
+      it "returns true" do
+        assert goal.valid?
+      end
+      it "should set errors to nil" do
+        goal.valid?
+        assert goal.errors.nil?
+      end
+    end
+    describe "with no name" do
+      let(:goal){ Goal.new(nil) }
+      it "returns false" do
+        refute goal.valid?
+      end
+      it "sets the error message" do
+        goal.valid?
+        assert_equal "\"\" is not a valid goal name.", goal.errors
+      end
+    end
+    describe "with empty name" do
+      let(:goal){ Goal.new("") }
+      it "returns false" do
+        refute goal.valid?
+      end
+      it "sets the error message" do
+        goal.valid?
+        assert_equal "\"\" is not a valid goal name.", goal.errors
+      end
+    end
+    describe "with a name with no letter characters" do
+      let(:goal){ Goal.new("777") }
+      it "returns false" do
+        refute goal.valid?
+      end
+      it "sets the error message" do
+        goal.valid?
+        assert_equal "\"777\" is not a valid goal name.", goal.errors
+      end
+    end
+    describe "with a previously invalid name" do
+      let(:goal){ Goal.new("666") }
+      before do
+        refute goal.valid?
+        goal.name = "Eat a pop tart"
+        assert_equal "Eat a pop tart", goal.name
+      end
+      it "should return true" do
+        assert goal.valid?
+      end
+      it "should not have an error message" do
+        goal.valid?
+        assert_nil goal.errors
+      end
+    end
+  end
 end

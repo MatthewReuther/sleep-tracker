@@ -15,16 +15,6 @@ describe GoalsController do
   describe ".add" do
     let(:controller) {GoalsController.new}
 
-    it "should say no goals found when empty" do
-      actual_output = controller.index
-      expected_output = "No goals found. Add a goal.\n"
-      assert_equal expected_output, actual_output
-    end
-  end
-
-  describe ".add" do
-    let(:controller) {GoalsController.new}
-
     it "should add a goal" do
       controller.add("run with scissors")
       assert_equal 1, Goal.count
