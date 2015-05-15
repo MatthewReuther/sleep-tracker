@@ -20,5 +20,22 @@ require_relative '../test_helper'
 # After the addition, the user is taken back to the main manage menu
 
 class AddingANewGoalTest < Minitest::Test
-
+  def test_adding_a_goal
+    shell_output = ""
+    expected_output = main_menu
+    test_goal = "tweleve hours"
+    IO.popen('./sleep_tracker manage', 'r+') do |pipe|
+      pipe.puts "1"
+      expected_output << "What goal would you like to add?\n"
+      pipe.puts test_goal
+      expected_output << "\"#{test_goal}\" has been added\n"
+      expected_output << main_menu
+      pipe.puts "3"
+      expected_output << "Good luck, see you soon!\n"
+      shell_output = pipe.read
+      pipe.close_write
+      pipe.close_read
+    end
+    assert_equal expected_output, shell_output
+  end
 end
