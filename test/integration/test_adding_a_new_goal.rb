@@ -40,7 +40,6 @@ class AddingANewGoalTest < Minitest::Test
   end
 
   def test_adding_a_goal_difficult_path
-    skip
     shell_output = ""
     happy_goal = "3 hours"
     expected_output = main_menu
@@ -54,7 +53,7 @@ class AddingANewGoalTest < Minitest::Test
       expected_output << "\"#{happy_goal}\" has been added\n"
       expected_output << main_menu
       pipe.puts "2"
-      expected_output << "1. #{happy_goal}"
+      expected_output << "1. #{happy_goal}\n"
       shell_output = pipe.read
       pipe.close_write
       pipe.close_read

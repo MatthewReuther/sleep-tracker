@@ -144,5 +144,20 @@ describe ".valid?" do
         assert_nil goal.errors
       end
     end
+    describe ".update" do
+      describe "edit previously entered goal" do
+        let(:goal_name){ "Eat a pop tart" }
+        let(:new_goal_name){ "Eat a toaster strudel" }
+        it "should update goal name but not id" do
+          goal = Goal.new(goal_name)
+          goal.save
+          assert_equal 1, Goal.count
+          goal.update(goal_name, new_goal_name)
+          last_row = Database.execute("SELECT * FROM goals WHERE name LIKE ?", goal_name)[0]
+          assert_equal 1, Goal.count
+          assert_equal new_goal_name, last_row['name']
+        end
+      end
+    end
   end
 end

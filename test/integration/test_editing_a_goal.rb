@@ -1,10 +1,11 @@
+require_relative '../test_helper'
+
 class EditingAGoalTest < Minitest::Test
 
-  def test_user_left_goal_unchanged
-    skip
+  def test_user_left_goals_unchanged
     shell_output = ""
     expected_output = main_menu
-    test_goal = "8 hours"
+    test_goal = "6 hours"
     IO.popen('./sleep_tracker manage', 'r+') do |pipe|
       pipe.puts "2"
       expected_output << "What goal would you like to add?\n"
@@ -16,7 +17,7 @@ class EditingAGoalTest < Minitest::Test
       pipe.puts "1"
       expected_output << actions_menu
       pipe.puts "3"
-      expected_out << main_menu
+      expected_output << main_menu
       shell_output = pipe.read
       pipe.close_write
       pipe.close_read
@@ -24,12 +25,11 @@ class EditingAGoalTest < Minitest::Test
     assert_equal expected_output, shell_output
   end
 
-  def test_happy_path_editing_a_goal
-    skip
+  def test_easy_path_editing_a_goal
+    skip("WIP")
   end
 
-  def test_sad_path_editing_a_goal
-    skip
+  def test_harder_path_editing_a_goal
+    skip("WIP")
   end
-
 end
