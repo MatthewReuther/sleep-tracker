@@ -24,3 +24,7 @@ end
 def main_menu
   "1. Add a goal\n2. List all goals\n3. Exit\n"
 end
+
+def actions_menu
+  "Would you like to?\n1. Edit\n2. Delete\n3. Exit\n"
+end
