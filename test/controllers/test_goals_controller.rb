@@ -16,7 +16,7 @@ describe GoalsController do
     let(:controller) {GoalsController.new}
 
     it "should add a goal" do
-      controller.add("run with scissors")
+      controller.add("7 hours")
       assert_equal 1, Goal.count
     end
 

@@ -1,6 +1,7 @@
 class EditingAGoalTest < Minitest::Test
 
   def test_user_left_goal_unchanged
+    skip
     shell_output = ""
     expected_output = main_menu
     test_goal = "8 hours"

@@ -17,9 +17,14 @@ if ARGV.size == 1 and ARGV[0] == "manage"
 
       goals_controller = GoalsController.new
       menu.choice('Add a goal') do
-        user_input = ask("What goal would you like to add?")
-        response = goals_controller.add(user_input)
-        say(response) unless response.nil?
+        loop do
+          user_input = ask("What goal would you like to add?")
+          response = goals_controller.add(user_input)
+          say(response) unless response.nil?
+          if /has\sbeen\sadded$/.match(response)
+            break
+          end
+        end
       end
       menu.choice('List all goals') do
         say(goals_controller.index)

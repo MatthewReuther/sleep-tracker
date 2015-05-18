@@ -16,7 +16,6 @@ class Minitest::Test
   end
 end
 
-
 def create_goal(name)
   Database.execute("INSERT INTO goals (name) VALUES (?)", name)
 end
