@@ -24,7 +24,7 @@ class TracksController
         edit(track)
       end
       menu.choice("Delete") do
-        destroy(track)
+        destroy(track.id)
       end
       menu.choice("Exit") do
         exit
@@ -39,6 +39,11 @@ class TracksController
     else
       track.errors
     end
+  end
+
+  def destroy(id)
+    Track.delete(id)
+    say ("Tracked hours have been deleted")
   end
 
   def edit(track)

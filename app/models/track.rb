@@ -59,6 +59,10 @@ class Track
     end
   end
 
+  def self.delete(id)
+    Database.execute("delete from tracks where id = ?", id)
+  end
+
   private
 
   def self.populate_from_database(row)
