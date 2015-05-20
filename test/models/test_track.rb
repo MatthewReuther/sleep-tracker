@@ -18,13 +18,8 @@ describe Track do
         # This is just an example to remind you that you can use multiple "its"
         assert_equal Array, Track.all.class
       end
-      it "should return the tracks in alphabetical order" do
-        expected = ["Five", "Six", "Ten"]
-        actual = Track.all.map{ |track| track.hours_slept }
-        assert_equal expected, actual
-      end
       it "populates the returned tracks' ids" do
-        expected_ids = Database.execute("SELECT id FROM tracks order by hours_slept ASC").map{ |row| row['id'] }
+        expected_ids = Database.execute("SELECT id FROM tracks order by id DESC").map{ |row| row['id'] }
         actual_ids = Track.all.map{ |track| track.id }
         assert_equal expected_ids, actual_ids
       end

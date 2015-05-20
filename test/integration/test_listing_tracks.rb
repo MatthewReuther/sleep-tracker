@@ -20,15 +20,15 @@ class TestListingTracks < Minitest::Test
   end
 
   def test_listing_multiple_tracks
-    create_track("five")
-    create_track("six")
+    create_track("6 hours")
+    create_track("5 hours")
     shell_output = ""
     expected_output = ""
     IO.popen('./sleep_tracker manage', 'r+') do |pipe|
       expected_output << main_menu
       pipe.puts "2" # List all tracks
-      expected_output << "1. five\n"
-      expected_output << "2. six\n"
+      expected_output << "1. 5 hours\n"
+      expected_output << "2. 6 hours\n"
       expected_output << "3. Exit\n"
       expected_output << "Exit\n"
       expected_output << exit_from(pipe)

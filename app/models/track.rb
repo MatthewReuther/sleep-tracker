@@ -11,7 +11,7 @@ class Track
   end
 
   def self.all
-    Database.execute("select * from tracks order by hours_slept ASC").map do |row|
+    Database.execute("select * from tracks order by id DESC").map do |row|
       populate_from_database(row)
     end
   end
