@@ -15,7 +15,6 @@ class TestListingTracks < Minitest::Test
       shell_output = pipe.read
       pipe.close_write
       pipe.close_read
-    shell_output = pipe.read
   end
   assert_equal expected_output, shell_output
   end
