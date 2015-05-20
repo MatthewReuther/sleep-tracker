@@ -26,13 +26,14 @@ class AddingANewGoalTest < Minitest::Test
     test_goal = "6 hours"
     IO.popen('./sleep_tracker manage', 'r+') do |pipe|
       pipe.puts "1"
-      expected_output << "What goal would you like to add?\n"
+      expected_output << "How many hours of sleep would you like to track?\n"
       pipe.puts test_goal
       expected_output << "\"#{test_goal}\" has been added\n"
       expected_output << main_menu
-      pipe.puts "2"
+      pipe.puts "2" #List Goals
       expected_output << "1. #{test_goal}\n"
       expected_output << "2. Exit\n"
+      expected_output << "Exit\n"
       expected_output << exit_from(pipe)
       shell_output = pipe.read
       pipe.close_write
@@ -47,16 +48,17 @@ class AddingANewGoalTest < Minitest::Test
     expected_output = main_menu
     IO.popen('./sleep_tracker manage', 'r+') do |pipe|
       pipe.puts "1"
-      expected_output << "What goal would you like to add?\n"
+      expected_output << "How many hours of sleep would you like to track?\n"
       pipe.puts ""
-      expected_output << "\"\" is not a valid goal name.\n"
-      expected_output << "What goal would you like to add?\n"
+      expected_output << "\"\" is not valid input to track your hours of sleep.\n"
+      expected_output << "How many hours of sleep would you like to track?\n"
       pipe.puts happy_goal
       expected_output << "\"#{happy_goal}\" has been added\n"
       expected_output << main_menu
       pipe.puts "2"
       expected_output << "1. #{happy_goal}\n"
       expected_output << "2. Exit\n"
+      expected_output << "Exit\n"
       expected_output << exit_from(pipe)
       shell_output = pipe.read
       pipe.close_write

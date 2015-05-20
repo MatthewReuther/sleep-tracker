@@ -9,7 +9,7 @@ describe GoalsController do
       skip
       # Temporarily skipped out.  To fix, see: https://github.com/JEG2/highline/issues/28
       actual_output = controller.index
-      expected_output = "No goals found. Add a goal.\n"
+      expected_output = "No tracked hours of sleep found. Add hours of sleep to track.\n"
       assert_equal expected_output, actual_output
     end
   end
@@ -25,7 +25,7 @@ describe GoalsController do
     it "should not add goal all spaces" do
       goal_name = "       "
       result = controller.add(goal_name)
-      assert_equal "\"\" is not a valid goal name.", result
+      assert_equal "\"\" is not valid input to track your hours of sleep.", result
     end
 
     it "should only add goals that make sense" do

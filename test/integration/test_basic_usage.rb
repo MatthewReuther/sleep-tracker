@@ -26,8 +26,8 @@ class TestBasicUsage < Minitest::Test
     expected_output = ""
     IO.popen('./sleep_tracker manage', 'r+') do |pipe|
       expected_output = <<EOS
-1. Add a goal
-2. List all goals
+1. Add hours of sleep to track
+2. List all hours tracked
 3. Exit
 EOS
       pipe.puts "3"

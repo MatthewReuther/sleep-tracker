@@ -34,9 +34,9 @@ class EditingAGoalTest < Minitest::Test
       pipe.puts "1"
       expected_output << actions_menu
       pipe.puts "1" # Edit
-      expected_output << "Enter a new name:\n"
+      expected_output << "Enter new hours of sleep to track:\n"
       pipe.puts "8 hours"
-      expected_output << "Goal has been updated to: \"8 hours\"\n"
+      expected_output << "Hours tracked have been updated to: \"8 hours\"\n"
       expected_output << main_menu
       pipe.puts "3" # Exit
       expected_output << "Good luck, see you soon!\n"
@@ -62,12 +62,12 @@ class EditingAGoalTest < Minitest::Test
       pipe.puts "1"
       expected_output << actions_menu
       pipe.puts "1" # Edit
-      expected_output << "Enter a new name:\n"
+      expected_output << "Enter new hours of sleep to track:\n"
       pipe.puts ""
-      expected_output << "\"\" is not a valid goal name.\n"
-      expected_output << "Enter a new name:\n"
+      expected_output << "\"\" is not valid input to track your hours of sleep.\n"
+      expected_output << "Enter new hours of sleep to track:\n"
       pipe.puts "8 hours"
-      expected_output << "Goal has been updated to: \"8 hours\"\n"
+      expected_output << "Hours tracked have been updated to: \"8 hours\"\n"
       expected_output << main_menu
       pipe.puts "3" # Exit
       expected_output << "Good luck, see you soon!\n"

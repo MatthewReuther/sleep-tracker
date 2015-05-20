@@ -24,11 +24,11 @@ end
 def exit_from(pipe)
   pipe.puts "Exit"
   pipe.puts "3"
-  main_menu + "Good luck, see your soon!\n"
+  main_menu + "Good luck, see you soon!\n"
 end
 
 def main_menu
-  "1. Add a goal\n2. List all goals\n3. Exit\n"
+  "1. Add hours of sleep to track\n2. List all hours tracked\n3. Exit\n"
 end
 
 def actions_menu

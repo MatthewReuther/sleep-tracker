@@ -32,7 +32,7 @@ describe Goal do
   end
 
   describe "#find" do
-    let(:goal){ Goal.new("Make pancakes") }
+    let(:goal){ Goal.new("6 hours") }
     before do
       goal.save
     end
@@ -97,7 +97,7 @@ describe Goal do
 
   describe ".save" do
     describe "if the model is valid" do
-      let(:goal){ Goal.new("roast a pig") }
+      let(:goal){ Goal.new("9 hours") }
       it "should return true" do
         assert goal.save
       end
@@ -106,7 +106,7 @@ describe Goal do
         assert_equal 1, Goal.count
         last_row = Database.execute("SELECT * FROM goals")[0]
         database_name = last_row['name']
-        assert_equal "roast a pig", database_name
+        assert_equal "9 hours", database_name
       end
       it "should populate the model with id from the database" do
         goal.save
@@ -127,14 +127,14 @@ describe Goal do
       end
       it "should populate the error messages" do # I have some qualms.
         goal.save
-        assert_equal "\"\" is not a valid goal name.", goal.errors
+        assert_equal "\"\" is not valid input to track your hours of sleep.", goal.errors
       end
     end
   end
 
   describe ".valid?" do
     describe "with valid data" do
-      let(:goal){ Goal.new("eat corn on the cob") }
+      let(:goal){ Goal.new("10 hours") }
       it "returns true" do
         assert goal.valid?
       end
@@ -150,7 +150,7 @@ describe Goal do
       end
       it "sets the error message" do
         goal.valid?
-        assert_equal "\"\" is not a valid goal name.", goal.errors
+        assert_equal "\"\" is not valid input to track your hours of sleep.", goal.errors
       end
     end
     describe "with empty name" do
@@ -160,7 +160,7 @@ describe Goal do
       end
       it "sets the error message" do
         goal.valid?
-        assert_equal "\"\" is not a valid goal name.", goal.errors
+        assert_equal "\"\" is not valid input to track your hours of sleep.", goal.errors
       end
     end
     describe "with a name with no letter characters" do
@@ -170,15 +170,15 @@ describe Goal do
       end
       it "sets the error message" do
         goal.valid?
-        assert_equal "\"777\" is not a valid goal name.", goal.errors
+        assert_equal "\"777\" is not valid input to track your hours of sleep.", goal.errors
       end
     end
     describe "with a previously invalid name" do
       let(:goal){ Goal.new("666") }
       before do
         refute goal.valid?
-        goal.name = "Eat a pop tart"
-        assert_equal "Eat a pop tart", goal.name
+        goal.name = "11 hours"
+        assert_equal "11 hours", goal.name
       end
       it "should return true" do
         assert goal.valid?
@@ -191,8 +191,8 @@ describe Goal do
   end
   describe "updating data" do
     describe "edit previously entered goal" do
-      let(:goal_name){ "Eat a pop tart" }
-      let(:new_goal_name){ "Eat a toaster strudel" }
+      let(:goal_name){ "11 hours" }
+      let(:new_goal_name){ "9 hours" }
       it "should update goal name but not id" do
         goal = Goal.new(goal_name)
         goal.save
@@ -204,8 +204,8 @@ describe Goal do
         assert_equal new_goal_name, last_row['name']
       end
       it "shouldn't update other goals' names" do
-        bob = Goal.new("Bob")
-        bob.save
+        hours = Goal.new("6 hours")
+        hours.save
         goal = Goal.new(goal_name)
         goal.save
         assert_equal 2, Goal.count
@@ -213,12 +213,12 @@ describe Goal do
         assert goal.save
         assert_equal 2, Goal.count
 
-        bob2 = Goal.find(bob.id)
-        assert_equal bob.name, bob2.name
+        hours2 = Goal.find(hours.id)
+        assert_equal hours.name, hours2.name
       end
     end
     describe "failed edit of previously entered goal" do
-      let(:goal_name){ "Eat a pop tart" }
+      let(:goal_name){ "11 hours" }
       let(:new_goal_name){ "" }
       it "does not update anything" do
         goal = Goal.new(goal_name)
@@ -236,7 +236,7 @@ describe Goal do
     describe "find when there's nothing in database" do
 
       before(:all) do
-        goal = Goal.new("eat a pop tart")
+        goal = Goal.new("11 hours")
         goal.save
       end
 
@@ -244,12 +244,12 @@ describe Goal do
         assert_respond_to Goal, :find_by_name
       end
       it "should return empty array" do
-        results = Goal.find_by_name("go fishing")
+        results = Goal.find_by_name("7 hours")
         assert_equal nil, results
       end
       it "should find only one item by a given name" do
-        results = Goal.find_by_name("eat a pop tart")
-        assert_equal "eat a pop tart", results.name
+        results = Goal.find_by_name("11 hours")
+        assert_equal "11 hours", results.name
       end
     end
   end

@@ -40,7 +40,7 @@ class Goal
 
   def valid?
     if name.nil? or name.empty? or /^\d+$/.match(name)
-      @errors = "\"#{name}\" is not a valid goal name."
+      @errors = "\"#{name}\" is not valid input to track your hours of sleep."
       false
     else
       @errors = nil

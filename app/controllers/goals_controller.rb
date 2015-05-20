@@ -12,7 +12,7 @@ class GoalsController
         menu.choice("Exit")
       end
     else
-      say("No goals found. Add a goal.\n")
+      say("No tracked hours of sleep found. Add hours of sleep to track.\n")
     end
   end
 
@@ -43,10 +43,10 @@ class GoalsController
 
   def edit(goal)
     loop do
-      user_input = ask("Enter a new name:")
+      user_input = ask("Enter new hours of sleep to track:")
       goal.name = user_input.strip
       if goal.save
-        say("goal has been updated to: \"#{goal.name}\"")
+        say("Hours tracked have been updated to: \"#{goal.name}\"")
         return
       else
         say(goal.errors)

@@ -8,7 +8,7 @@ class TestListingGoals < Minitest::Test
   IO.popen('./sleep_tracker manage', 'r+') do |pipe|
     expected_output << main_menu
     pipe.puts "2"
-    expected_output << "No goals found. Add a goal.\n"
+    expected_output << "No tracked hours of sleep found. Add hours of sleep to track.\n"
       expected_output << main_menu
       pipe.puts "Exit"
       expected_output << "Good luck, see you soon!\n"
@@ -31,6 +31,7 @@ class TestListingGoals < Minitest::Test
       expected_output << "1. five\n"
       expected_output << "2. six\n"
       expected_output << "3. Exit\n"
+      expected_output << "Exit\n"
       expected_output << exit_from(pipe)
       pipe.close_write
       shell_output = pipe.read
