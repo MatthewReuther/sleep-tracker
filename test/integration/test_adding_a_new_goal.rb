@@ -20,10 +20,10 @@ require_relative '../test_helper'
 # After the addition, the user is taken back to the main manage menu
 
 class AddingANewGoalTest < Minitest::Test
-  def test_adding_a_goal_correct_path
+  def test_happy_path_adding_a_goal
     shell_output = ""
     expected_output = main_menu
-    test_goal = "tweleve hours"
+    test_goal = "6 hours"
     IO.popen('./sleep_tracker manage', 'r+') do |pipe|
       pipe.puts "1"
       expected_output << "What goal would you like to add?\n"
@@ -32,6 +32,8 @@ class AddingANewGoalTest < Minitest::Test
       expected_output << main_menu
       pipe.puts "2"
       expected_output << "1. #{test_goal}\n"
+      expected_output << "2. Exit\n"
+      expected_output << exit_from(pipe)
       shell_output = pipe.read
       pipe.close_write
       pipe.close_read
@@ -39,9 +41,9 @@ class AddingANewGoalTest < Minitest::Test
     assert_equal expected_output, shell_output
   end
 
-  def test_adding_a_goal_difficult_path
+  def test_sad_path_adding_a_goal
     shell_output = ""
-    happy_goal = "3 hours"
+    happy_goal = "7 hours"
     expected_output = main_menu
     IO.popen('./sleep_tracker manage', 'r+') do |pipe|
       pipe.puts "1"
@@ -54,6 +56,8 @@ class AddingANewGoalTest < Minitest::Test
       expected_output << main_menu
       pipe.puts "2"
       expected_output << "1. #{happy_goal}\n"
+      expected_output << "2. Exit\n"
+      expected_output << exit_from(pipe)
       shell_output = pipe.read
       pipe.close_write
       pipe.close_read
@@ -61,4 +65,3 @@ class AddingANewGoalTest < Minitest::Test
     assert_equal expected_output, shell_output
   end
 end
-

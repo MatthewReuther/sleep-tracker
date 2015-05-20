@@ -1,20 +1,10 @@
 require_relative '../test_helper'
 
 class TestBasicUsage < Minitest::Test
-  def test_minimum_arguments_required
-    shell_output = ""
-    expected_output = ""
-    IO.popen('./sleep_tracker') do |pipe|
-      expected_output = "[Help] Run as: ./sleep_tracker manage\n"
-      shell_output = pipe.read
-    end
-    assert_equal expected_output, shell_output
-  end
-
   def test_manage_wrong_argument_given
     shell_output = ""
     expected_output = ""
-    IO.popen('./sleep_tracker idk') do |pipe|
+    IO.popen('./sleep_tracker blah') do |pipe|
       expected_output = "[Help] Run as: ./sleep_tracker manage\n"
       shell_output = pipe.read
     end
@@ -24,7 +14,7 @@ class TestBasicUsage < Minitest::Test
   def test_manage_multiple_arguments_given
     shell_output = ""
     expected_output = ""
-    IO.popen('./sleep_tracker idk idk') do |pipe|
+    IO.popen('./sleep_tracker manage blah') do |pipe|
       expected_output = "[Help] Run as: ./sleep_tracker manage\n"
       shell_output = pipe.read
     end

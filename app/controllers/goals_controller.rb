@@ -4,24 +4,55 @@ class GoalsController
   def index
     if Goal.count > 0
       goals = Goal.all # All of the goals in an array
-      goals_string = ""
-      goals.each_with_index do |goal, index|
-        goals_string << "#{index + 1}. #{goal.name}\n" #=> 1. six
+      choose do |menu|
+        menu.prompt = ""
+        goals.each do |goal|
+          menu.choice(goal.name){ action_menu(goal) }
+        end
+        menu.choice("Exit")
       end
-      goals_string
     else
-      "No goals found. Add a goal.\n"
+      say("No goals found. Add a goal.\n")
+    end
+  end
+
+  def action_menu(goal)
+    say("Would you like to?")
+    choose do |menu|
+      menu.prompt = ""
+      menu.choice("Edit") do
+        edit(goal)
+      end
+      menu.choice("Delete") do
+        destroy(goal)
+      end
+      menu.choice("Exit") do
+        exit
+      end
     end
   end
 
   def add(name)
-    name_cleaned = name.strip
-    goal = Goal.new(name_cleaned)
+    goal = Goal.new(name.strip)
     if goal.save
       "\"#{name}\" has been added\n"
     else
       goal.errors
     end
   end
+
+  def edit(goal)
+    loop do
+      user_input = ask("Enter a new name:")
+      goal.name = user_input.strip
+      if goal.save
+        say("goal has been updated to: \"#{goal.name}\"")
+        return
+      else
+        say(goal.errors)
+      end
+    end
+  end
 end
+
 

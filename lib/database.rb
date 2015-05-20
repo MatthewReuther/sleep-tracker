@@ -1,13 +1,21 @@
 require 'sqlite3'
 
 class Database
-    def self.load_structure
+
+  def self.load_structure
     Database.execute <<-SQL
     CREATE TABLE IF NOT EXISTS goals (
       id integer PRIMARY KEY AUTOINCREMENT,
       name varchar(255) NOT NULL
     );
     SQL
+    # Database.execute <<-SQL
+    # CREATE TABLE IF NOT EXISTS dates (
+    #   id integer PRIMARY KEY AUTOINCREMENT,
+    #   selected_goals_id integer NOT NULL,
+    #   rejected_goals_id integer NOT NULL
+    # );
+    # SQL
   end
 
   def self.execute(*args)

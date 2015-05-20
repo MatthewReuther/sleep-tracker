@@ -13,11 +13,18 @@ class Minitest::Test
   def setup
     Database.load_structure
     Database.execute("DELETE FROM goals;")
+    # Database.execute("DELETE FROM dates;")
   end
 end
 
 def create_goal(name)
   Database.execute("INSERT INTO goals (name) VALUES (?)", name)
+end
+
+def exit_from(pipe)
+  pipe.puts "Exit"
+  pipe.puts "3"
+  main_menu + "Good luck, see your soon!\n"
 end
 
 def main_menu

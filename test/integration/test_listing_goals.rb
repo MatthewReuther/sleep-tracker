@@ -9,7 +9,12 @@ class TestListingGoals < Minitest::Test
     expected_output << main_menu
     pipe.puts "2"
     expected_output << "No goals found. Add a goal.\n"
-    pipe.close_write
+      expected_output << main_menu
+      pipe.puts "Exit"
+      expected_output << "Good luck, see you soon!\n"
+      shell_output = pipe.read
+      pipe.close_write
+      pipe.close_read
     shell_output = pipe.read
   end
   assert_equal expected_output, shell_output
@@ -25,6 +30,8 @@ class TestListingGoals < Minitest::Test
       pipe.puts "2" # List all goals
       expected_output << "1. five\n"
       expected_output << "2. six\n"
+      expected_output << "3. Exit\n"
+      expected_output << exit_from(pipe)
       pipe.close_write
       shell_output = pipe.read
     end
