@@ -17,8 +17,8 @@ class Minitest::Test
   end
 end
 
-def create_goal(name)
-  Database.execute("INSERT INTO goals (name) VALUES (?)", name)
+def create_goal(hours_slept)
+  Database.execute("INSERT INTO goals (hours_slept) VALUES (?)", hours_slept)
 end
 
 def exit_from(pipe)

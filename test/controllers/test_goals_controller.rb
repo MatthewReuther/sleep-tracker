@@ -23,14 +23,14 @@ describe GoalsController do
     end
 
     it "should not add goal all spaces" do
-      goal_name = "       "
-      result = controller.add(goal_name)
+      goal_hours_slept = "       "
+      result = controller.add(goal_hours_slept)
       assert_equal "\"\" is not valid input to track your hours of sleep.", result
     end
 
     it "should only add goals that make sense" do
-      goal_name = "77777777"
-      controller.add(goal_name)
+      goal_hours_slept = "77777777"
+      controller.add(goal_hours_slept)
       assert_equal 0, Goal.count
     end
 

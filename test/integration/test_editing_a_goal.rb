@@ -45,8 +45,8 @@ class EditingAGoalTest < Minitest::Test
       pipe.close_read
     end
     assert_equal expected_output, shell_output
-    new_name = Goal.find(goal.id).name
-    assert_equal "8 hours", new_name
+    new_hours_slept = Goal.find(goal.id).hours_slept
+    assert_equal "8 hours", new_hours_slept
   end
 
   def test_sad_path_editing_a_goal
@@ -76,8 +76,8 @@ class EditingAGoalTest < Minitest::Test
       pipe.close_read
     end
     assert_equal expected_output, shell_output
-    new_name = Goal.find(goal.id).name
-    assert_equal "8 hours", new_name
+    new_hours_slept = Goal.find(goal.id).hours_slept
+    assert_equal "8 hours", new_hours_slept
   end
 
 end

@@ -7,7 +7,7 @@ class GoalsController
       choose do |menu|
         menu.prompt = ""
         goals.each do |goal|
-          menu.choice(goal.name){ action_menu(goal) }
+          menu.choice(goal.hours_slept){ action_menu(goal) }
         end
         menu.choice("Exit")
       end
@@ -32,10 +32,10 @@ class GoalsController
     end
   end
 
-  def add(name)
-    goal = Goal.new(name.strip)
+  def add(hours_slept)
+    goal = Goal.new(hours_slept.strip)
     if goal.save
-      "\"#{name}\" has been added\n"
+      "\"#{hours_slept}\" has been added\n"
     else
       goal.errors
     end
@@ -44,9 +44,9 @@ class GoalsController
   def edit(goal)
     loop do
       user_input = ask("Enter new hours of sleep to track:")
-      goal.name = user_input.strip
+      goal.hours_slept = user_input.strip
       if goal.save
-        say("Hours tracked have been updated to: \"#{goal.name}\"")
+        say("Hours tracked have been updated to: \"#{goal.hours_slept}\"")
         return
       else
         say(goal.errors)

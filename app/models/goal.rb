@@ -1,9 +1,9 @@
 class Goal
   attr_reader :id, :errors
-  attr_accessor :name
+  attr_accessor :hours_slept
 
-  def initialize(name = nil)
-    self.name = name
+  def initialize(hours_slept = nil)
+    self.hours_slept = hours_slept
   end
 
   def ==(other)
@@ -11,7 +11,7 @@ class Goal
   end
 
   def self.all
-    Database.execute("select * from goals order by name ASC").map do |row|
+    Database.execute("select * from goals order by hours_slept ASC").map do |row|
       populate_from_database(row)
     end
   end
@@ -29,8 +29,8 @@ class Goal
     end
   end
 
-  def self.find_by_name(name)
-    row = Database.execute("select * from goals where name LIKE ?", name).first
+  def self.find_by_hours_slept(hours_slept)
+    row = Database.execute("select * from goals where hours_slept LIKE ?", hours_slept).first
     if row.nil?
       nil
     else
@@ -39,8 +39,8 @@ class Goal
   end
 
   def valid?
-    if name.nil? or name.empty? or /^\d+$/.match(name)
-      @errors = "\"#{name}\" is not valid input to track your hours of sleep."
+    if hours_slept.nil? or hours_slept.empty? or /^\d+$/.match(hours_slept)
+      @errors = "\"#{hours_slept}\" is not valid input to track your hours of sleep."
       false
     else
       @errors = nil
@@ -51,10 +51,10 @@ class Goal
   def save
     return false unless valid?
     if @id.nil?
-      Database.execute("INSERT INTO goals (name) VALUES (?)", name)
+      Database.execute("INSERT INTO goals (hours_slept) VALUES (?)", hours_slept)
       @id = Database.execute("SELECT last_insert_rowid()")[0]['last_insert_rowid()']
     else
-      Database.execute("UPDATE goals SET name=? WHERE id=?", name, id)
+      Database.execute("UPDATE goals SET hours_slept=? WHERE id=?", hours_slept, id)
       true
     end
   end
@@ -63,7 +63,7 @@ class Goal
 
   def self.populate_from_database(row)
     goal = Goal.new
-    goal.name = row['name']
+    goal.hours_slept = row['hours_slept']
     goal.instance_variable_set(:@id, row['id'])
     goal
   end
