@@ -1,13 +1,13 @@
 require "highline/import"
 
-class GoalsController
+class TracksController
   def index
-    if Goal.count > 0
-      goals = Goal.all # All of the goals in an array
+    if Track.count > 0
+      tracks = Track.all # All of the tracks in an array
       choose do |menu|
         menu.prompt = ""
-        goals.each do |goal|
-          menu.choice(goal.hours_slept){ action_menu(goal) }
+        tracks.each do |track|
+          menu.choice(track.hours_slept){ action_menu(track) }
         end
         menu.choice("Exit")
       end
@@ -16,15 +16,15 @@ class GoalsController
     end
   end
 
-  def action_menu(goal)
+  def action_menu(track)
     say("Would you like to?")
     choose do |menu|
       menu.prompt = ""
       menu.choice("Edit") do
-        edit(goal)
+        edit(track)
       end
       menu.choice("Delete") do
-        destroy(goal)
+        destroy(track)
       end
       menu.choice("Exit") do
         exit
@@ -33,23 +33,23 @@ class GoalsController
   end
 
   def add(hours_slept)
-    goal = Goal.new(hours_slept.strip)
-    if goal.save
+    track = Track.new(hours_slept.strip)
+    if track.save
       "\"#{hours_slept}\" has been added\n"
     else
-      goal.errors
+      track.errors
     end
   end
 
-  def edit(goal)
+  def edit(track)
     loop do
       user_input = ask("Enter new hours of sleep to track:")
-      goal.hours_slept = user_input.strip
-      if goal.save
-        say("Hours tracked have been updated to: \"#{goal.hours_slept}\"")
+      track.hours_slept = user_input.strip
+      if track.save
+        say("Hours tracked have been updated to: \"#{track.hours_slept}\"")
         return
       else
-        say(goal.errors)
+        say(track.errors)
       end
     end
   end

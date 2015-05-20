@@ -1,15 +1,15 @@
 require_relative '../test_helper'
 
-class EditingAGoalTest < Minitest::Test
+class EditingAtrackTest < Minitest::Test
 
-  def test_user_left_goals_unchanged
+  def test_user_left_tracks_unchanged
     shell_output = ""
     expected_output = main_menu
-    test_goal = "9 hours"
-    Goal.new(test_goal).save
+    test_track = "9 hours"
+    Track.new(test_track).save
     IO.popen('./sleep_tracker manage', 'r+') do |pipe|
       pipe.puts "2" # List
-      expected_output << "1. #{test_goal}\n"
+      expected_output << "1. #{test_track}\n"
       expected_output << "2. Exit\n"
       pipe.puts "1"
       expected_output << actions_menu
@@ -21,15 +21,15 @@ class EditingAGoalTest < Minitest::Test
     assert_equal expected_output, shell_output
   end
 
-  def test_happy_path_editing_a_goal
+  def test_happy_path_editing_a_track
     shell_output = ""
     expected_output = main_menu
-    test_goal = "9 hours"
-    goal = Goal.new(test_goal)
-    goal.save
+    test_track = "9 hours"
+    track = Track.new(test_track)
+    track.save
     IO.popen('./sleep_tracker manage', 'r+') do |pipe|
       pipe.puts "2" # List
-      expected_output << "1. #{test_goal}\n"
+      expected_output << "1. #{test_track}\n"
       expected_output << "2. Exit\n"
       pipe.puts "1"
       expected_output << actions_menu
@@ -45,19 +45,19 @@ class EditingAGoalTest < Minitest::Test
       pipe.close_read
     end
     assert_equal expected_output, shell_output
-    new_hours_slept = Goal.find(goal.id).hours_slept
+    new_hours_slept = Track.find(track.id).hours_slept
     assert_equal "8 hours", new_hours_slept
   end
 
-  def test_sad_path_editing_a_goal
+  def test_sad_path_editing_a_track
     shell_output = ""
     expected_output = main_menu
-    test_goal = "9 hours"
-    goal = Goal.new(test_goal)
-    goal.save
+    test_track = "9 hours"
+    track = Track.new(test_track)
+    track.save
     IO.popen('./sleep_tracker manage', 'r+') do |pipe|
       pipe.puts "2" # List
-      expected_output << "1. #{test_goal}\n"
+      expected_output << "1. #{test_track}\n"
       expected_output << "2. Exit\n"
       pipe.puts "1"
       expected_output << actions_menu
@@ -76,7 +76,7 @@ class EditingAGoalTest < Minitest::Test
       pipe.close_read
     end
     assert_equal expected_output, shell_output
-    new_hours_slept = Goal.find(goal.id).hours_slept
+    new_hours_slept = Track.find(track.id).hours_slept
     assert_equal "8 hours", new_hours_slept
   end
 

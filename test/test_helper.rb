@@ -12,13 +12,13 @@ require 'minitest/autorun'
 class Minitest::Test
   def setup
     Database.load_structure
-    Database.execute("DELETE FROM goals;")
+    Database.execute("DELETE FROM tracks;")
     # Database.execute("DELETE FROM dates;")
   end
 end
 
-def create_goal(hours_slept)
-  Database.execute("INSERT INTO goals (hours_slept) VALUES (?)", hours_slept)
+def create_track(hours_slept)
+  Database.execute("INSERT INTO tracks (hours_slept) VALUES (?)", hours_slept)
 end
 
 def exit_from(pipe)

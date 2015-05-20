@@ -15,11 +15,11 @@ if ARGV.size == 1 and ARGV[0] == "manage"
     choose do |menu|
       menu.prompt = ""
 
-      goals_controller = GoalsController.new
+      tracks_controller = TracksController.new
       menu.choice('Add hours of sleep to track') do
         loop do
           user_input = ask("How many hours of sleep would you like to track?")
-          response = goals_controller.add(user_input)
+          response = tracks_controller.add(user_input)
           say(response) unless response.nil?
           if /has\sbeen\sadded$/.match(response)
             break
@@ -27,7 +27,7 @@ if ARGV.size == 1 and ARGV[0] == "manage"
         end
       end
       menu.choice('List all hours tracked') do
-        say(goals_controller.index)
+        say(tracks_controller.index)
       end
       menu.choice('Exit') do
         say("Good luck, see you soon!\n")

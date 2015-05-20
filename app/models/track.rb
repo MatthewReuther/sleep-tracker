@@ -1,4 +1,4 @@
-class Goal
+class Track
   attr_reader :id, :errors
   attr_accessor :hours_slept
 
@@ -7,21 +7,21 @@ class Goal
   end
 
   def ==(other)
-    other.is_a?(Goal) && other.id == self.id
+    other.is_a?(Track) && other.id == self.id
   end
 
   def self.all
-    Database.execute("select * from goals order by hours_slept ASC").map do |row|
+    Database.execute("select * from tracks order by hours_slept ASC").map do |row|
       populate_from_database(row)
     end
   end
 
   def self.count
-    Database.execute("select count(id) from goals")[0][0]
+    Database.execute("select count(id) from tracks")[0][0]
   end
 
   def self.find(id)
-    row = Database.execute("select * from goals where id = ?", id).first
+    row = Database.execute("select * from tracks where id = ?", id).first
     if row.nil?
       nil
     else
@@ -30,7 +30,7 @@ class Goal
   end
 
   def self.find_by_hours_slept(hours_slept)
-    row = Database.execute("select * from goals where hours_slept LIKE ?", hours_slept).first
+    row = Database.execute("select * from tracks where hours_slept LIKE ?", hours_slept).first
     if row.nil?
       nil
     else
@@ -51,10 +51,10 @@ class Goal
   def save
     return false unless valid?
     if @id.nil?
-      Database.execute("INSERT INTO goals (hours_slept) VALUES (?)", hours_slept)
+      Database.execute("INSERT INTO tracks (hours_slept) VALUES (?)", hours_slept)
       @id = Database.execute("SELECT last_insert_rowid()")[0]['last_insert_rowid()']
     else
-      Database.execute("UPDATE goals SET hours_slept=? WHERE id=?", hours_slept, id)
+      Database.execute("UPDATE tracks SET hours_slept=? WHERE id=?", hours_slept, id)
       true
     end
   end
@@ -62,9 +62,9 @@ class Goal
   private
 
   def self.populate_from_database(row)
-    goal = Goal.new
-    goal.hours_slept = row['hours_slept']
-    goal.instance_variable_set(:@id, row['id'])
-    goal
+    track = Track.new
+    track.hours_slept = row['hours_slept']
+    track.instance_variable_set(:@id, row['id'])
+    track
   end
 end

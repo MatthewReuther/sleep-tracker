@@ -1,11 +1,11 @@
 require_relative "../test_helper"
 
-describe GoalsController do
+describe TracksController do
 
   describe ".index" do
-    let(:controller) {GoalsController.new}
+    let(:controller) {TracksController.new}
 
-    it "should say no goals found when empty" do
+    it "should say no tracks found when empty" do
       skip
       # Temporarily skipped out.  To fix, see: https://github.com/JEG2/highline/issues/28
       actual_output = controller.index
@@ -15,23 +15,23 @@ describe GoalsController do
   end
 
   describe ".add" do
-    let(:controller) {GoalsController.new}
+    let(:controller) {TracksController.new}
 
-    it "should add a goal" do
+    it "should add a track" do
       controller.add("7 hours")
-      assert_equal 1, Goal.count
+      assert_equal 1, Track.count
     end
 
-    it "should not add goal all spaces" do
-      goal_hours_slept = "       "
-      result = controller.add(goal_hours_slept)
+    it "should not add track all spaces" do
+      track_hours_slept = "       "
+      result = controller.add(track_hours_slept)
       assert_equal "\"\" is not valid input to track your hours of sleep.", result
     end
 
-    it "should only add goals that make sense" do
-      goal_hours_slept = "77777777"
-      controller.add(goal_hours_slept)
-      assert_equal 0, Goal.count
+    it "should only add tracks that make sense" do
+      track_hours_slept = "77777777"
+      controller.add(track_hours_slept)
+      assert_equal 0, Track.count
     end
 
   end

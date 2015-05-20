@@ -1,8 +1,8 @@
 require_relative '../test_helper'
 
-class TestListingGoals < Minitest::Test
+class TestListingTracks < Minitest::Test
 
-  def test_listing_no_goals
+  def test_listing_no_tracks
   shell_output = ""
   expected_output = ""
   IO.popen('./sleep_tracker manage', 'r+') do |pipe|
@@ -20,14 +20,14 @@ class TestListingGoals < Minitest::Test
   assert_equal expected_output, shell_output
   end
 
-  def test_listing_multiple_goals
-    create_goal("five")
-    create_goal("six")
+  def test_listing_multiple_tracks
+    create_track("five")
+    create_track("six")
     shell_output = ""
     expected_output = ""
     IO.popen('./sleep_tracker manage', 'r+') do |pipe|
       expected_output << main_menu
-      pipe.puts "2" # List all goals
+      pipe.puts "2" # List all tracks
       expected_output << "1. five\n"
       expected_output << "2. six\n"
       expected_output << "3. Exit\n"

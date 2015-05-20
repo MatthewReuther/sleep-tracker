@@ -4,7 +4,7 @@ class Database
 
   def self.load_structure
     Database.execute <<-SQL
-    CREATE TABLE IF NOT EXISTS goals (
+    CREATE TABLE IF NOT EXISTS tracks (
       id integer PRIMARY KEY AUTOINCREMENT,
       hours_slept integer NOT NULL
     );
